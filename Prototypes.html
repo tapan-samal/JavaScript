@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prototypes</title>
+  </head>
+
+  <body>
+    <h1 style="text-align: center">JavaScript Prototypes</h1>
+    <h3>
+      > Prototypes: Prototypes is the mechanism by which JavaScript objects
+      inherit features from one another. <br />
+      > Every Data type inherit from Object.prototype. <br />
+      > Null has no prototype and act as final proptotype.
+    </h3>
+
+    <script>
+      let name = "Tapan";
+      let userNames = ["Tapan", "Sapan"];
+      let userName = {
+        name: "tapan",
+      };
+      function myName() {
+        return "tapan";
+      }
+      console.log(name.__proto__ === String.prototype);
+      console.log(userNames.__proto__ === Array.prototype);
+      console.log(userName.__proto__ === Object.prototype);
+      console.log(myName.__proto__ === Function.prototype);
+
+      //Every data type inherit from Object.prototype
+      console.log(String.prototype.__proto__ === Object.prototype);
+      console.log(Array.prototype.__proto__ === Object.prototype);
+      console.log(Function.prototype.__proto__ === Object.prototype);
+      console.log(Boolean.prototype.__proto__ === Object.prototype);
+      console.log(Object.prototype.__proto__); //End prototype
+      console.log(Object.prototype);
+      console.log(userName.__proto__.__proto__); //We cannot add more __proto__, here is end
+
+      //In JavaScript a constructor function is used to create objects.
+      //Use case of Prototype: 1. Add new methods onto the prototype property, 2. Implement Inheritance
+
+      function User(name) {
+        this.name = name;
+        // this.getDetail = function() {
+        //     console.log(this.name);
+        // }
+      }
+      User.prototype.getDetail = function () {
+        console.log(this.name);
+      };
+      let user1 = new User("Tapan");
+      let user2 = new User("Kumar");
+      user1.getDetail();
+      user2.getDetail();
+      console.log(user1.__proto__);
+      console.log(user1.__proto__ === user2.__proto__);
+
+      ////
+      function Users(name) {
+        this.name = name;
+      }
+      Users.prototype.getDetail = function () {
+        console.log(this.name);
+      };
+      let users1 = new Users("React");
+      let users2 = new Users("Next");
+      users1.getDetail();
+      users2.getDetail();
+      console.log(users1);
+      console.log(users1.name);
+      console.log(users2.name);
+
+      let student = {
+        fname: "Tapan",
+        lname: "Samal",
+        birth: 1992,
+        getFullName: function () {
+          return this.fname + " " + this.lname;
+        },
+        getAge: function () {
+          let age = new Date().getFullYear() - this.birth;
+          return age;
+        },
+      };
+      console.log(student.getFullName);
+      console.log(student.getFullName());
+      console.log(student.getAge());
+
+      let teacher = {
+        fname: "Nagendra",
+        lname: "Pradhan",
+        birth: 1970,
+        getFullName: function () {
+          return this.fname + " " + this.lname;
+        },
+        getAge: function () {
+          let age = new Date().getFullYear() - this.birth;
+          return age;
+        },
+      };
+      console.log(teacher.getFullName());
+      console.log(teacher.getAge());
+
+      //Above examples use same method repeatedely, for the sollution we have to make a mechanism called prototypes.
+
+      let users = {
+        getFullName: function () {
+          return this.fname + " " + this.lname;
+        },
+        getAge: function () {
+          let age = new Date().getFullYear() - this.birth;
+          return age;
+        },
+      };
+      let student1 = {
+        fname: "Tapan",
+        lname: "Samal",
+        birth: 1992,
+        getAge: users.getAge, //In complex project, this method slow the browser(load automatically).
+      };
+      let teacher1 = {
+        fname: "Nagendra",
+        lname: "Pradhan",
+        birth: 1970,
+      };
+
+      // student1.__proto__ = users;
+      teacher1.__proto__ = users;
+
+      console.log(student1.getAge());
+      console.log(teacher1.getAge());
+
+      //Add methods to prototype
+      Object.prototype.myAppData = "Lets check"; //add additional info
+      Object.prototype.myFun = function () {
+        return "Add Function to prototype";
+      };
+      String.prototype.otherData = "This property is for string";
+
+      //We can change default property also
+      String.prototype.bold = "Error";
+
+      //Prototype Inheritance
+      function Phone() {
+        this.modelNumber = "XXX";
+        this.getModelNumber = function () {
+          return this.modelNumber;
+        };
+      }
+
+      function Motorola() {
+        this.modelNumber = "One Power";
+        this.latestFeature = function () {
+          console.log(`Motorola has a Z Ultra foldable smart phone.`);
+        };
+      }
+
+      Motorola.prototype = new Phone();
+      console.log(Motorola.prototype.getModelNumber());
+      let object = new Motorola();
+      console.log(object.getModelNumber());
+      object.latestFeature();
+
+      // Runner.prototype.gameover = () => {};      Game continue when google has no internet
+
+      //Interview: Create a vehicle constructor function with make and model property.
+      //then create a car constructor that extends vehicle and add a yera property.
+      //create a car instance and access its property and methods
+
+      class Vehicle {
+        constructor(make, model) {
+          this.make = make;
+          this.model = model;
+        }
+
+        getDetails() {
+          return `${this.make} ${this.model}`;
+        }
+      }
+
+      class Car extends Vehicle {
+        constructor(make, model, year) {
+          super(make, model); // Call the parent constructor
+          this.year = year;
+        }
+
+        getCarDetails() {
+          return `${this.year} ${this.make} ${this.model}`;
+        }
+      }
+
+      // Creating a car instance
+      const myCar = new Car("Toyota", "Camry", 2021);
+
+      // Accessing properties
+      console.log(myCar.make); // Output: Toyota
+      console.log(myCar.model); // Output: Camry
+      console.log(myCar.year); // Output: 2021
+
+      // Accessing methods
+      console.log(myCar.getDetails()); // Output: Toyota Camry (inherited from Vehicle)
+      console.log(myCar.getCarDetails()); // Output: 2021 Toyota Camry (defined in Car)
+    </script>
+  </body>
+</html>

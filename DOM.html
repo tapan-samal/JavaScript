@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D O M</title>
+    <style>
+        p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center;">D O M (Document Object Model)</h1>
+
+    <h3>1. Meaning of DOM :</h3>
+    <p>
+        > The Document Object Model(DOM) is an application programming interface(API) for manipulating HTML documents.
+        <br>
+        > The DOM provides functions that allow to add, remove and modify parts of the document effectively. <br>
+        > The DOM represents an HTML document as a tree of nodes. <br>
+        > Each tag in a document is a node and each node has parent child relationships in the DOM tree. <br>
+        > The html node is a parent node of head and body child node.
+    </p>
+
+    <h3>2. Methods of DOM :</h3>
+    <div id="container">
+        <p id="message">> document.getElementById()</p>
+        <p id="message">> document.getElementByName()</p>
+        <input type="text" name="language" value="JavaScript">
+        <input type="text" name="language" value="Java">
+        <p class="mssg">> document.getElementsByTagName()</p>
+        <p class="mssg">> document.getElementsByClassName()</p>
+        <p id="query" class="query">> document.querySelector()</p>
+        <p id="query" class="query">> document.querySelectorAll()</p>
+
+    </div>
+
+    <script>
+        let mssg = document.getElementById('message');
+        console.log(mssg);
+
+        let btn = document.getElementsByName('language');
+        console.log(btn);
+
+        let para = document.getElementsByTagName('p');
+        console.log(para);
+
+        let clss = document.getElementsByClassName('mssg');
+        console.log(clss);
+
+        let contain = document.getElementById('container');
+        let inside = contain.getElementsByClassName('mssg');
+        console.log(inside);
+
+        let queryId = document.querySelector('#query');
+        console.log(queryId);
+        let queryCl = document.querySelector('.query');
+        console.log(queryCl);
+
+        let queryTag = document.querySelector('p');    //First para will take
+        console.log(queryTag);
+
+        let queryAll = document.querySelectorAll('.query');
+        console.log(queryAll);
+
+        let queryEle = document.querySelectorAll('div input');
+        console.log(queryEle);
+
+        let queryElem = document.querySelectorAll('p, input');
+        console.log(queryElem);
+
+    </script>
+    <h3>3. Traversing Elements :</h3>
+    <p>
+        > To get the parent node: parentNode <br>
+        > To get child Elements of node: firstElementChild, lastElementChild, childNodes <br>
+        > To get next/prev Siblings: previousElementSibling / nextElementSibling
+    </p>
+    <div class="title">
+        <p class="txt">Welcome to HTML</p>
+        <p class="middle">Welcome to JavaScript</p>
+        <p class="txt">Welcome to ReactJS</p>
+    </div>
+    <script>
+        //How to get parent nodes/ child nodes/ sibling nodes
+        let text = document.querySelector('.txt');
+        console.log(text.parentNode);
+
+        let parent = document.querySelector('.title');
+        console.log(parent.firstElementChild);
+        console.log(parent.lastElementChild);
+        console.log(parent.childNodes);
+
+        let middle = document.querySelector('.middle');
+        console.log(middle.previousElementSibling);
+        console.log(middle.nextElementSibling);
+
+    </script>
+
+    <h3>4. Manipulating Elements :</h3>
+    <p>
+        > createElement() Method: <br>
+        > appendChild() Method: <br>
+        > textContent Method: <br>
+        > innerHTML Method: <br>
+        > after() Method: <br>
+        > append() Method: <br>
+        > prepend() Method: <br>
+        > insertAdjacentHTML() Method: <br>
+        > replaceChild() Method: <br>
+        > cloneNode() Method: <br>
+        > removeChild() Method: <br>
+        > insertBefore() Method: <br>
+
+
+    </p>
+    <ul id="menu">
+        <li>Menu</li>
+        <li style="display: none;">About</li>
+    </ul>
+    <script>
+        // createElement()
+        //To create an HTML element, we use the createElement() method.
+        //The document.createElement() accepts an HTML tag name and returns a new Node with the Element type.
+        let div = document.createElement('div');             //Empty div
+        div.innerHTML = "<p>Element Created by DOM</p>";     //Add div content
+        div.id = "idName";                                   //Add id
+        div.className = "className";                         //Add class
+        console.log(div);
+        document.body.appendChild(div);         //Display in web page
+
+        // appendChild
+        //Use appendChild() method to add a node to the end of the lists of child nodes of a specified parent node.
+        //It can be used to move an existing child node to the new position within the document.
+        let menu = document.querySelector('#menu');
+        let addList = document.createElement("li");
+        addList.innerHTML = "Contact";
+        menu.appendChild(addList);
+
+        // textContent
+        //To get text content of a node and its descendants, use the textContent property.
+        let content = document.getElementById('menu');
+        console.log(content);
+        console.log(content.textContent);     //Dispaly all texts 
+        console.log(content.innerText);      //Display only visible text 
+        // content.textContent = "Hello";    //Add/Replace the node 
+
+        // innerHTML
+        //It is used to add HTML code on the web page.
+        let addContent = document.createElement('div');
+        addContent.innerHTML = "Hello JavaScript!";               //Default Text
+        addContent.textContent = "<h1>Hello JavaScript!</h1>";    //Display with tag
+        addContent.innerText = "<h1>Hello JavaScript!</h1>";    //Display with tag
+        addContent.innerHTML = "<h1>Hello JavaScript!</h1>";       //Display only text
+
+        document.body.appendChild(addContent);
+
+        // after()
+        //Use after() method to insert one or more nodes after the element.
+        let str1 = "Not Bad, ";
+        let str2 = "C, D";
+        // addContent.after(str1, str2);
+
+        // append()
+        //Similar to appendChild method, add multiple nodes and string also.
+        addContent.append(str1)
+        addContent.append("Good to Learn");
+
+        // prepend()
+        //Add first child to parent node.
+        addContent.prepend("Welcome !")
+
+        // insertAdjacentHTML()
+        //Add node beforebegin, afterbegin, beforeend, afterend.
+        //Syntax: element.insertAdjacentHTML(positionName, text);
+        menu.insertAdjacentHTML("afterbegin", "<li>After Begin</li>");
+        menu.insertAdjacentHTML("afterend", "<li>After End</li>");
+        menu.insertAdjacentHTML("beforebegin", "<li>Before Begin</li>");
+        menu.insertAdjacentHTML("beforeend", "<li>Before End</li>");
+
+        // replaceChild() Method
+        //Syntax: parentNode.repalceChild(newChild, oldChild);
+
+        // cloneNode()
+        let newNode = menu.cloneNode();          //Default/false copy only parent node
+        console.log(newNode);
+        let newNodes = menu.cloneNode(true);    //Argument true means copy the parent aw well as child nodes
+        console.log(newNodes);
+
+        // removeChild()
+        //Syntax: parentNode.removeChild(childNode);
+        menu.removeChild(menu.lastElementChild);     //Before End remove
+        menu.removeChild(menu.firstElementChild);     //After Begin remove
+
+        // insertBefore() 
+        //Insert a new node before an existing node as a child node of a parent node.
+        //Syntax: parentNode.insertBefore(newNode, existingNode);
+        menu.insertBefore(newNode, menu.firstElementChild)
+    </script>
+
+    <h3>5. Attribute Method :</h3>
+    <p>
+        > getAttribute() Method: <br>
+        > setAttribute() Method: <br>
+        > hasAttribute() Method: <br>
+        > removeAttribute() Method: <br>
+    </p>
+    <input type="text" id="username" placeholder="User Name">
+    <script>
+        let inputBox = document.getElementById('username');
+        console.log(inputBox.attributes);
+        console.log(inputBox.getAttribute('type'));
+        console.log(inputBox.getAttribute('placeholder'));
+
+        inputBox.setAttribute("class", "user");
+        console.log(inputBox);
+
+        console.log(inputBox.hasAttribute('class'));
+        console.log(inputBox.hasAttribute('id'));
+
+        inputBox.removeAttribute("placeholder");
+        console.log(inputBox);
+    </script>
+
+    <h3>6. Manipulating Element's Style :</h3>
+    <p>
+        <input type="text" id="myuser" placeholder="User Name" style="background-color: yellowgreen; font-size: 15px;">
+        <br><br>
+        > Style Property: <br>
+        > cssText Property: <br>
+        > getComputedStyle() method: <br>
+        > className Property: <br>
+        > classList Property:
+    <h4 id="mytitle" class="main message">JavaScript</h4>
+
+    </p>
+    <script>
+        let userInput = document.querySelector('#myuser');
+        console.log(userInput.style);
+        console.log(userInput.style.fontSize);
+        console.log(userInput.style.backgroundColor);
+
+        userInput.style.padding = "5px";
+        console.log(userInput.style);
+
+        userInput.style.cssText += "color: white";    //It will override all csss
+        console.log(userInput);
+
+        console.log(window.getComputedStyle(userInput));   //All css will display
+        console.log(window.getComputedStyle(userInput).backgroundColor);
+        console.log(window.getComputedStyle(userInput).fontSize);
+
+        let mytitle = document.getElementById('mytitle');
+        console.log(mytitle.className);
+
+        mytitle.className += " concatClass";
+        console.log(mytitle.className);
+
+        console.log(mytitle.classList);     //Display all class list
+
+        mytitle.className = "newClass";     //Override existing class name 
+        console.log(mytitle.className);
+
+        mytitle.classList.add("new", "newTwo");   //add more class name
+        console.log(mytitle.className);
+
+        mytitle.classList.remove("newClass", "newTwo");
+        console.log(mytitle.className);
+
+        mytitle.classList.replace("new", "myClass");
+        console.log(mytitle.className);
+
+        console.log(mytitle.classList.contains("new"));
+        console.log(mytitle.classList.contains("myClass"));
+
+        mytitle.classList.toggle("newClass");  //available means remove, Unavailable means add
+        console.log(mytitle.className);
+
+    </script>
+
+    </body>
+
+</html>

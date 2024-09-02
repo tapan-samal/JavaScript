@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Function</title>
+  </head>
+
+  <body>
+    <h1 style="text-align: center">Function :</h1>
+    <h4>
+      A JavaScript function is a block of code designed to perform a specific
+      tasks or actions. <br />
+      A JavaScript function is executed when "something" invokes it or calls it.
+      <br />
+      Function define the code once but use multy times. <br />
+      Function can reuse with different arguments to produce different results.
+      <br />
+      A JavaScript function is defined with the function keyword, followed by
+      name and parentheses ().
+    </h4>
+
+    <script>
+      function myFun() {} //Function Declare/Definition
+      myFun(); //Function Execution/call
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      function myFun() {
+        console.log("Hello to my Function !");
+      }
+      myFun();
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      var x = 12;
+      var y = 13;
+      function mySum() {
+        console.log(x + y);
+      }
+      mySum();
+
+      /// Function with Parameters & Arguments //
+      function mySum1(a, b) {
+        //Here aand b are parameters
+        console.log(a + b);
+      }
+      mySum1(8, 7); // Here, 8 and 7 are arguments
+      mySum1(18, 32);
+
+      function myRoll(a, b) {
+        console.log(a + " roll number is " + b);
+      }
+      myRoll("Tapan", 111);
+
+      function addNumbers(num1, num2) {
+        //Here Inside parentheses parameters
+        console.log(num1 + num2);
+      }
+      addNumbers(5, 7); //Here inside parentheses agruments
+      addNumbers(5, "7");
+      addNumbers(5, null);
+      addNumbers(5, "A");
+
+      //Default Parameter
+      //Default parameter value can be override
+      function myName(fn = "Tapan", ln = "Samal") {
+        console.log(fn + " " + ln);
+      }
+      myName();
+
+      /// Function with Return Statement //
+      function sum(a, b) {
+        return a + b;
+      }
+      var total = sum(12, 18);
+      console.log(total);
+
+      var a = 12;
+      var b = 13;
+      function mySum2() {
+        return a + b;
+      }
+      var total = mySum2();
+      console.log(total);
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      function addNumber(n1, n2) {
+        let result = n1 + n2;
+        return result;
+        console.log("Tapan"); //After retun nothing will work
+      }
+      const result = addNumber(6, 9);
+      console.log(result);
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      function add2Numbers(n1, n2) {
+        return n1 + n2;
+      }
+      const rsult = add2Numbers(8, 4);
+      console.log(rsult);
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      function loginMesasage(username) {
+        return `${username} Just Logged In`; //String Interpoletion
+      }
+      console.log(loginMesasage());
+      console.log(loginMesasage(""));
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      function loginUserMessage(username) {
+        if (username === undefined) {
+          console.log("Please enter username");
+          return;
+        }
+      }
+      loginUserMessage();
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      function loginUserMssg(username = "Tapan") {
+        if (!username) {
+          console.log("Please enter your username");
+          return;
+        }
+        return `${username} just logged in`;
+      }
+      console.log(loginUserMssg());
+      console.log(loginUserMssg("Abhi"));
+
+      // Function with Object and Array
+      function addCardPrice(...items) {
+        //... rest operator
+        return items;
+      }
+      console.log(addCardPrice(200, 400, 500));
+
+      // Object
+      const user = {
+        name: "Tapan",
+        age: 30,
+      };
+      function handleObject() {
+        console.log("Username is " + user.name + " and age is " + user.age);
+      }
+      handleObject();
+
+      // Array
+      const myArray = [100, 200, 500, 900];
+      function handleArray(getValue) {
+        return getValue[1];
+      }
+      console.log(handleArray(myArray));
+      console.log(handleArray([10, 50, 70, 90]));
+    </script>
+
+    <h2>3. Callback function</h2>
+    <script>
+      //A callback function is a function passed into another function as a argument, which is then invoked inside the outer function to complete the task.
+      //Uses of callback function in Higher Order function: EventHandler, Map, Filter, Reduce, SetTimeout, SetInterval
+      //We can pass whole callback function in Higher order function as argument.
+      //Synchronous callback executed immediately, Asynchronous callback executed later on.
+
+      //Sync Callback
+      function task1() {
+        console.log("Task1 in progress");
+      }
+      function task2(callback) {
+        console.log("Task2 in progress");
+        callback();
+      }
+      task2(task1); //Task2 Higher order and Task1 callback function.
+
+      console.log("Statement 1");
+      function action1() {
+        console.log("Action 1 message");
+      }
+
+      console.log("Statement 2");
+      function action2(callback) {
+        console.log("Action 2 message");
+        callback();
+      }
+      action2(() => action1("Hello"));
+      console.log("Statement 3");
+
+      function greeting(name) {
+        console.log("Hello " + name);
+      }
+      function userInput(callback) {
+        let name = "Tapan";
+        callback(name);
+      }
+      userInput(greeting);
+
+      //Async Callback
+      function sendNotification() {
+        console.log("Your profile is shortlisted");
+      }
+      function applyForJob(callback) {
+        console.log("Your resume has uplaoded");
+        console.log("Your request is in progress");
+        setTimeout(() => {
+          callback();
+        }, 3000);
+      }
+      applyForJob(sendNotification);
+    </script>
+
+    <h2>4. Higher Order Function</h2>
+    <script>
+      //A function that take another function as an arguments or return a function as a output.
+      function xx(fn) {
+        fn();
+      }
+      function yy() {
+        console.log("Hello from Y");
+      }
+      xx(yy); //Here xx is higher order function and yy as callback function.
+
+      const data = [10, 20, 30, 50];
+
+      function evalAddition(x) {
+        return x + 1;
+      }
+      function evalMultipe(y) {
+        return y * 2;
+      }
+
+      // const evalMath = function(data, cal) {
+      //     const output = [];
+      //     for (let i = 0; i < data.length; i++) {
+      //         output.push(cal(data[i]))
+      //     }
+      //     return output;
+      // };
+      // console.log(evalMath(data, evalAddition));
+      // console.log(evalMath(data, evalMultipe));
+
+      Array.prototype.evalMath = function (calc) {
+        //More optimized
+        const output = [];
+        for (let i = 0; i < this.length; i++) {
+          output.push(calc(this[i]));
+        }
+        return output;
+      };
+      console.log(data.evalMath(evalAddition));
+      console.log(data.evalMath(evalMultipe));
+      console.log(data.map(evalMultipe)); //Map is also a higher order function
+    </script>
+
+    <h2>5. Pure Function</h2>
+    <script>
+      // Characteristics of Pure Function Predictable, Readable, Reusable, Testable
+      // A Pure function is a function where the return value is only determined by its arguments without any side effects.
+      //Pure function cannot access and modify global/outside variables.
+      //Pure function cannot use console inside.
+
+      //Pure
+      const greets = (name) => {
+        return `Hey ${name}`;
+      };
+      console.log(greets("Anamika")); //Pure function
+
+      function pure(x, y) {
+        return x * y;
+      }
+      console.log(pure(5, 6));
+
+      //Impure
+      let s = 7;
+      function impure(s) {
+        return s * s;
+      }
+      console.log(impure(s));
+
+      let message = "Hello"; //Not pure, bcz modifying global variable
+      const greet1 = (name) => {
+        return `${message} ${name}`;
+      };
+      console.log(greet1("Anamika"));
+
+      message = "Good Evening"; //value side effect by outside
+      console.log(greets("Anamika")); //Not pure
+    </script>
+
+    <h2>6. Currying Function</h2>
+    <h3 id="header">Hello User !!</h3>
+    <script>
+      // Currying is the process of taking a function with multiple arguments and transformed into a sequence of functions, each taking a single argument.
+      function multiply(x) {
+        return function (y) {
+          return x * y;
+        };
+      }
+      console.log(multiply(10)(30));
+
+      const secondVal = multiply(12);
+      console.log(secondVal(10));
+
+      function sum(x) {
+        return function (y) {
+          return function (z) {
+            return x + y + z;
+          };
+        };
+      }
+      console.log(sum(25)(15)(48));
+
+      const addNums = (x) => (y) => (z) => x + y + z; //Using arrow function
+      console.log(addNums(2)(4)(3));
+
+      function multipleNums(a) {
+        return (b, c) => {
+          return a * b * c;
+        };
+      }
+      console.log(multipleNums(2)(3, 2)); //This is a partial application, not a currying fn, bcz taking multiple argument
+
+      let users = {
+        firstName: "tapan",
+        lastName: "samal",
+        city: "Balasore",
+      };
+      //without currying function
+      function getUsersDetail(data, key) {
+        return data[key];
+      }
+      console.log(getUsersDetail(users, "firstName"));
+      console.log(getUsersDetail(users, "lastName"));
+      console.log(getUsersDetail(users, "city"));
+
+      //with currying function
+      function getUserDetails(data) {
+        return (key) => data[key];
+      }
+      const usersDetail = getUserDetails(users);
+      console.log(usersDetail("firstName"));
+      console.log(usersDetail("lastName"));
+      console.log(usersDetail("city"));
+
+      //Using DOM
+      // const updateNode = function(id) {
+      //     return function(content) {
+      //         return document.querySelector(`#${id}`).textContent = content;
+      //     }
+      // };
+      const updateNode = (id) => (content) =>
+        (document.querySelector(`#${id}`).textContent = content);
+
+      const updateHeader = updateNode("header");
+      updateHeader("Hello Tapan");
+    </script>
+
+    <h2>7. Debounce Function</h2>
+    <h3>Search : <input type="text" id="input" /></h3>
+    <script>
+      // The debouncing is a function, used not to called frequently, that helps optimizing performance and preventing excessive function calls.
+      //It postponing the execution of the function until after a certain amount of time has passed since the last time it was triggered.
+      // It is used to handle the events, such as scroll, resize, or input.
+
+      const element = document.querySelector("input");
+      function outcome(data) {
+        console.log("Data received from server", data);
+      }
+      //Without debounce
+      // element.addEventListener('keyup', outcome);
+
+      //With debounce
+      function debounceFun(func, timeout) {
+        let timer;
+        return function (...args) {
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => func(args), timeout);
+        };
+      }
+      const results = debounceFun(outcome, 1000);
+      element.addEventListener("keyup", (e) => results(e.target.value));
+    </script>
+
+    <h3>8. Memoization</h3>
+    <script>
+      //Memoization is an optimization technique that can help make heavy computation process more efficient.
+      //It store computation results in cache and retrive the same information from cache when needed without computing again.
+      //It reduce execution time and increase CPU performance.
+      //It should be a Pure function.
+      //It is the combination of Higher order function and Closures.
+      function add(x) {
+        return 10 + x;
+      }
+
+      const memo = (func) => {
+        let cache = {};
+        return function (x) {
+          if (cache[x]) {
+            console.log(cache); //key
+            console.log("Return from cache");
+            return cache[x];
+          } else {
+            console.log("Calculating the result");
+            const result = func(x);
+            cache[x] = result;
+            return result;
+          }
+        };
+      };
+      const compute = memo(add);
+      console.log(compute(10));
+      console.log(compute(10));
+      console.log(compute(20));
+    </script>
+    <h3>Lecture by FreeCodeCamp.org</h3>
+    <script>
+      // Q1: What is Function declaration/Difinition...?
+      //A function declaration is way to define a function with name, parameters and return type in a programming language.
+      function square(num) {
+        return num * num;
+      }
+
+      // Q2: What is function expression...?
+      //When a function assign to a variable and it may be anonymous or named function.
+      const square1 = function (num) {
+        //Expression with Anonymous function
+        return num * num;
+      };
+
+      const square2 = function squareName(x, y) {
+        return x * y;
+      };
+
+      // Q3: What is first class function...?
+      //a first-class function is a function that can be treated just like any other value or data in a programming language.
+      //Pass it as an argument to other functions. Return it as a result from other functions.
+      function displaySquare(fn) {
+        console.log("Square is " + fn(5));
+      }
+      displaySquare(square);
+
+      // Q4: What is IIFE..?
+      //Immediately Invoked Function Expression
+      //Function executed immediately after declaration.
+      (function square3(num) {
+        console.log(num * num);
+      })(6);
+
+      (function (x) {
+        return (function (y) {
+          console.log(x);
+        })(2);
+      })(7);
+
+      // Q5: What is Function scope in JavaScript...?
+      //Variables defined inside a function cannot be accessed from anywhere outside the function.
+      //Function defined in the global scope can access all variables defined in the global scope.
+
+      //Variable defined in global scope
+      const num1 = 20;
+      const num2 = 5;
+      const name = "Kumar";
+      //Function defined in global scope
+      function multiply() {
+        return num1 * num2;
+      }
+      console.log(multiply());
+
+      //Nested Function
+      function getScore() {
+        const num1 = 7;
+        const num2 = 8;
+        function add() {
+          return `${name} scored ${num1 + num2}`;
+        }
+        return add();
+      }
+      console.log(getScore());
+
+      // Q6: Function Scope output based question
+      for (var i = 0; i < 5; i++) {
+        setTimeout(() => {
+          console.log(i);
+        }, i * 100);
+      }
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          // console.log(i);
+        }, i * 2000);
+      }
+
+      // Q7: Function Hoisting ...?
+      //Hoisting in JavaScript is a behavior in which function declarations moved to the top of the scope during execution.
+      functionName();
+      function functionName() {
+        console.log("Roadside Coder");
+      }
+      //Function hoisting applies only to function declarations, not to function expressions.
+      // greet();
+      var greet = function () {
+        console.log("Hello Hoisting!");
+      };
+
+      console.log(xy); //xy hoisted but not intialized
+      var xy = 15;
+
+      var ab = 21;
+      var fun = function () {
+        console.log(ab); //Its accessing local variables without value
+        var ab = 20;
+      };
+      fun();
+
+      // Q8: Parameters vs Arguments
+      function paraFun(num) {
+        //Here num is parameters
+        return;
+      }
+      paraFun(15); //Here 15 is argument
+
+      // Q9: Spread Operator vs Rest Operator
+      function spreadFun(n1, n2) {
+        console.log(n1 * n2);
+      }
+      let arr = [4, 5];
+      spreadFun(...arr);
+
+      function restFun(...nums) {
+        //Here is rest operator
+        console.log(nums[0] * nums[1]);
+      }
+      let arr1 = [7, 8];
+      restFun(...arr1); //Here is spread operator
+
+      const restFunction = (a, ...nums) => {
+        //Rest parameter must be last parameter
+        console.log(nums);
+      };
+      restFunction(5, 6, 7, 8);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OOP (Object Oriented Programming)</title>
+  </head>
+  <body>
+    <h2 style="text-align: center">O O P</h2>
+
+    <script>
+      //Class is a template for creating objects with similar properties and methods.
+      //Use the keyword class to create a class.
+      //Template always includs constructor method which called automatically when new object is created.
+
+      //First create template
+      class Student {
+        constructor() {
+          //Methods
+          console.log("Object is Created");
+        }
+      }
+      //Now assign the template to a variable with new keyword(create object)
+      const object1 = new Student(); //Now object is created
+      const object2 = new Student();
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      class Person {
+        constructor(firstName, lastName) {
+          this.firstName = firstName;
+          this.lastName = lastName;
+        }
+        displayFullName() {
+          console.log(this.firstName + " " + this.lastName);
+        }
+      }
+      const p1 = new Person("Kumar", "Tapan");
+      p1.displayFullName();
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      class Employee {
+        constructor(fName, lName) {
+          this.firstName = fName;
+          this.lastName = lName;
+        }
+        displayFullNam() {
+          return this.firstName + " " + this.lastName;
+        }
+      };
+      const e1 = new Employee("Ratan", "Tata");
+      const name1 = e1.displayFullNam(); //when use retun, it store in a variable
+      console.log(name1);
+
+      //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+      class Bike {
+        constructor(name, year) {
+          this.name = name;
+          this.year = year;
+        }
+        bikeAge() {
+          const date = new Date();
+          return date.getFullYear() - this.year;
+        }
+      };
+      const myBike = new Bike('Ninja', 2018);
+      console.log("My Bike age is " + myBike.bikeAge() + " years old.");
+
+      // Object Literal
+      const user = {
+        userName: "Tapan",
+        loginCount: 10,
+        signedIn: true,
+
+        getUserDetails: function () {
+          console.log("Got user details from database");
+          console.log(`Username ${this.userName}`);
+          console.log(this);
+        },
+      };
+
+      console.log(user.userName);
+      console.log(user.getUserDetails());
+      console.log(this);
+
+      // Constructor
+      // const promiseOne = new Promise();      //new is function of constructor
+      // const date = new Date();
+
+      function User(userName, loginCount, isLoggedIn) {
+        this.userName = userName;
+        this.loginCount = loginCount;
+        this.isLoggedIn = isLoggedIn;
+
+        this.greeting = function () {
+          console.log(`Welcome ${this.userName}`);
+        };
+        return this;
+      }
+
+      const userOne = new User("Tapan", 12, true);
+      const userTwo = new User("Kumar", 11, false);
+      console.log(userOne);
+      console.log(userTwo);
+      console.log(userTwo.construtor);
+
+      //new keyword create a empty object
+      //then injected in this keywird
+    </script>
+  </body>
+</html>

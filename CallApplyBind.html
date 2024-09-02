@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Call | Apply | Bind</title>
+</head>
+<body>
+    <h1 style="text-align: center;"> Call || Apply || Bind</h1>
+
+    <button id="btn">Show Employee Details</button>
+    
+    <script>
+        //This keyword
+        const employee = {
+            fname: "Nisha",
+            lname: "Singla",
+            getFullName: function () {
+                console.log(this);     //complete employee object
+                console.log(`${this.fname} ${this.lname}`);
+            }
+        };
+        employee.getFullName();
+
+        const getEmpDetail = employee.getFullName; 
+        getEmpDetail();    //Now "this" print the default window object and name not found in global context 
+
+        //Call() & Apply(): Borrowing function
+        //Function executed immediately
+        //In-built function of JavaScript
+        //In call pass argument individually by comma
+        //In apply pass argument as array
+
+        const company = {
+            firstName: "TATA",
+            lastName: "India",
+            getFullName: function() {
+                // console.log(this);
+                console.log(`${this.firstName} ${this.lastName}`);
+            }
+        };
+        
+        const emp1 = {
+            firstName: "Tapan",
+            lastName: "Samal",
+        };
+        const emp2 = {
+            firstName: "Sapan",
+            lastName: "Samal",
+        };
+
+        company.getFullName();
+        company.getFullName.call(emp1);
+        company.getFullName.apply(emp1);
+        
+        const getFullName = function(city, profile) {
+                console.log(`${this.firstName} ${this.lastName} staying in  ${city} as a ${profile}`);
+            };
+    
+        getFullName.call(emp1, 'Banglore', 'Developer');    
+        getFullName.apply(emp2, ['Bhadrak', 'Banker']);     
+
+        //Bind() : 
+        //Function executed later on, when invoke
+        //Call a new function
+        //Pass argument individually by comma
+        const bindHandler = getFullName.bind(emp1);
+        bindHandler('Goa', 'Instructer');
+
+        const obj = document.getElementById('btn');
+        obj.addEventListener('click', getFullName.bind(emp1, 'Mumbai', 'Enterprenuer'))
+    </script>
+</body>
+</html>

@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>|| ES 6 ||</title>
+  </head>
+
+  <body>
+    <h1 style="text-align: center">ECMAScript 2015 or ES 6</h1>
+
+    <h3>1. Let and Const :</h3>
+    <script>
+      //Let and Const introduced in ES6.
+      //The let and const keyword allows to declare a variable with block scope or braces scope {...}.
+      //Scope decides the accessibility of data.
+      //Let and Const are not hoisted.
+      //The let makes a variable but const makes a constant.
+      //Let can reassign but const cann't.
+
+      //ES5
+      console.log(es5); //undefined - var has global scope
+      var es5 = "ES5 Test";
+
+      var firstName = "tapan";
+      function getName() {
+        //After ES6 only function has scope
+        var firstName = "kumar";
+        console.log("Inside function : ", firstName);
+      }
+      getName();
+      console.log("Outside function: ", firstName);
+
+      var username = "Dhoni";
+      if (true) {
+        //Here block scope is not working
+        var username = "Jadega";
+        console.log("Inside block: ", username);
+      }
+      console.log("Outside block: ", username);
+
+      //So more control over data, we use let and const.
+
+      //ES6
+      // console.log(es6);                //referenceError
+      let es6 = "ES6 Test";
+
+      let x;
+      x = 10;
+      let a = 12;
+      a = 15;
+
+      const b = 16;
+      // b = 18;   //print error
+
+      let greet = "Hello";
+      {
+        let greet = "Good Morning";
+        console.log("Greet inside: ", greet);
+      }
+      console.log("Greet outside: ", greet);
+    </script>
+
+    <h3>2. Fat Arrow Function :</h3>
+    <script>
+      function add(x, y) {
+        //Traditional
+        return x + y;
+      }
+      console.log(add(7, 8));
+
+      const sum = (x, y) => x + y; //Arrow function with argument
+      console.log(sum(5, 7));
+
+      const sum1 = () => 4 + 3; //Arrow function Without argument
+      console.log(sum1());
+
+      const sum2 = (x) => x + 6; //Arrow function with single argument
+      console.log(sum2(4));
+
+      const sum3 = (x, y) => {
+        //Arrow function with multi statement use {retun}
+        const res = x + y;
+        return res;
+      };
+      console.log(sum3(10, 8));
+
+      const userDetail = () => ({
+        //Arrow function with objct, ({..})
+        name: "Tapan",
+        city: "Balasore",
+      });
+      console.log(userDetail());
+      console.log(userDetail().city);
+
+      //In scope, arrow function not need reference
+      function addToCart() {
+        this.product = "Laptop";
+
+        // this.getProduct = function() {
+        //     const that = this;                 //Create reference between that.product & this.product
+        //     setTimeout(function() {
+        //         console.log(that.product);
+        //     }, 1000);
+        // }
+        this.getProduct = function () {
+          setTimeout(() => {
+            //This arraow setTimeout, no need reference
+            console.log(this.product);
+          }, 1000);
+        };
+      }
+      let object = new addToCart();
+      object.getProduct();
+
+      //Argument property not work in arrow function
+      function abc() {
+        console.log(arguments);
+      }
+      abc(10, 20, 30);
+
+      const abcd = (...args) => {
+        //args in parameter
+        console.log(args);
+      };
+      abcd(50, 60, 70);
+
+      //Use in Map()
+      const names = ["sam", "jhon", "peter"];
+      const result = names.map((name) => name.toUpperCase());
+      console.log(result);
+
+      //In class method arrow function will not work.
+    </script>
+
+    <h3>3. Templeate Literals/String :</h3>
+    <script>
+      //Template strings use back-ticks ` ` rather than the single or double quotes
+      //Uses of Template literals: Inject variables & functions, Multiline strings, Expression evaluation, use conditional statement, use quotations inside.
+      let productName = "Laptop";
+      let quantity = 2;
+      let status = "pending";
+
+      let productStatus = "Status of the product is ";
+      productStatus += status === "delivered" ? "green" : "red";
+
+      let quotes =
+        "I have order " +
+        quantity +
+        " " +
+        productName +
+        ' from "Amazon". ' +
+        productStatus;
+      console.log(quotes);
+
+      function expectedDelivery() {
+        return "12-10-2023";
+      }
+
+      let productStat = `Status of the of the product is ${
+        status === "delivered" ? "greeen" : "red"
+      }`;
+
+      let template = `sl no ${2 + 5}: I have order ${quantity} ${productName} 
+        from "Amazon" and expected delivery may on ${expectedDelivery()}. ${productStat}`;
+      console.log(template);
+    </script>
+
+    <h3>4. Mutable and Immutable Objects</h3>
+    <script>
+      //If the value can change, the object is called mutable.Reference type
+      //If the value cannot change, the object is called immutable.Primitive Data type
+
+      //Primitive type: Different location
+      let y = 20;
+      let z = y;
+      z = z + 1;
+      console.log(y); //Value not changed
+      console.log(z);
+
+      //Reference type : Same Location
+      let arry1 = ["value1", "value2"];
+      // let arry2 = arry1;
+      let arry2 = [...arry1]; //Spread operator create new location & value will immutable
+      arry2.pop();
+      console.log("Array 1 : " + arry1); //value changed
+      console.log("Array 2 : " + arry2);
+
+      let obj1 = {
+        name: "tapu",
+        city: "Bls",
+      };
+      // let obj2 = obj1;
+      // let obj2 = Object.assign({}, obj1);      //Assign method create new location and make immutable
+      let obj2 = { ...obj1 }; //Spread operator also create new location and make immutable
+      obj2.age = 30;
+      console.log(obj1); //value changed
+      console.log(obj2);
+    </script>
+
+    <h3>5. Default Parameters :</h3>
+    <script>
+      // We can set default parameter value, when call empty function call.
+      function myFun(params = 0) {
+        //param = 0 set for default value
+        console.log(params);
+      }
+      myFun(120); //Overide default value
+      myFun();
+    </script>
+
+    <h3>6. Spread Operator :</h3>
+    <script>
+      // 3 dots followed by iterable/array
+      // ...spraed : copy of elements or spread the elements in targeted location.
+      //It expand the array into individual elements. So it used for expand the array where zero or more elements.
+
+      const users = ["user1", "user2"];
+      console.log(users); //Without spread operator
+      console.log(...users); //Without spread operator
+
+      //Spread operator with arrays
+      const team1 = ["Dhoni", "Jadeja"];
+      const team2 = ["Virat"];
+      const team3 = ["Rohit"];
+
+      console.log(team1, team2, team3); //Separated arrays
+      console.log(team1.concat(team2)); //Here only 2 variables can concat
+      console.log(...team1, ...team2, ...team3); //But here multiple variables
+
+      const productList = ["Phone", "Tab"];
+      // const newList = productList;
+      const newList = [...productList]; //Spread operator not change original array
+      console.log(productList);
+      console.log(newList);
+      newList.push("Laptop");
+      console.log(productList); //ProductList should not be changed.
+      console.log(newList);
+
+      var arr = [1, 2, 3, 4, 5];
+      var arr1 = [...arr]; //spread
+      console.log(arr1);
+
+      //Spread operator with Objects
+      const emp = {
+        name: "tapan",
+        city: "Banglore",
+      };
+      const cloneEmp = { ...emp };
+      console.log(emp);
+      console.log(cloneEmp);
+
+      const empDetail = { age: 30 };
+      const mergeEmpDetail = { ...emp, ...empDetail };
+      console.log(mergeEmpDetail);
+
+      //Spread operator with Functions
+      const scoreList = [60, 75, 52, 80, 91];
+
+      console.log(Math.min.apply(null, scoreList)); //Before ES6
+      console.log(Math.max.apply(null, scoreList)); //Before ES6
+      console.log(Math.min(...scoreList)); //Min value
+      console.log(Math.max(...scoreList)); //Max value
+
+      const todos = [
+        { task: "reading", completed: true },
+        { task: "writing", completed: false },
+      ];
+      function addTodo(newTodo) {
+        // todos.push(newTodo)       //Undefined
+        return [...todos, { ...newTodo }];
+      }
+      const newLists = addTodo({ task: "painting", completed: false });
+      console.log(todos); //Changing original not a good practice
+      console.log(newLists); //After spread operator used
+    </script>
+
+    <h3>7. Rest Operator :</h3>
+    <script>
+      // ...rest operator : keep the remaining elements in a variables.
+      // The rest parameter syntax allows a function to accept an indefinite number of arguments as an array.
+
+      function sums(x, y, z) {
+        console.log(x + y + z);
+      }
+      sums(2, 3);
+      sums(3, 5, 7, 8, 9); //Only take first two numbers
+
+      function myFunn(a, b, c, ...d) {
+        //d is rest operator
+        console.log(a, b, c, d);
+      }
+      myFunn(1, 2, 3, 4, 5, 6);
+
+      function addNumbers(...values) {
+        //...values is rest parameter
+        console.log(Array.isArray(values)); //This is an array
+        let sum = 0;
+        values.map((n) => (sum += n));
+        console.log("Sum: ", sum);
+      }
+      addNumbers(3, 5, 7, 8, 9);
+
+      function addNumbers1() {
+        console.log(Array.isArray(arguments)); //This is not an array - before ES6
+      }
+      addNumbers1(3, 5, 7, 8, 9);
+
+      function calculate(type, ...values) {
+        let sum = 0;
+        values.map((n) => (sum += n));
+        console.log(type + sum);
+      }
+      calculate("Sum: ", 10, 20, 30);
+    </script>
+
+    <h3>8. Destructuring :</h3>
+    <script>
+      //Destructuring provides a concise syntax to easily extract values from arrays or properties from objects and assign to variables.
+      //Syntax: const (identifier) = expression
+
+      //Array Destructuring
+      var d = [1, 2, 3];
+      var [p, , r, s] = d;
+      console.log(p, r, s);
+
+      const colors = ["red", "blue", "green"];
+      const [firstCol, secondCol, thirdCol] = colors;
+      console.log(firstCol);
+      console.log(thirdCol);
+
+      //Object Destructuring
+      var obj = { name: "tapan", age: 30 };
+      var { age } = obj;
+      console.log(age);
+
+      const userDetails = {
+        firstName: "tapan",
+        lastName: "samal",
+        address: {
+          city: "Balasore",
+          country: "India",
+        },
+      };
+
+      const name = userDetails.firstName;
+      console.log(name);
+
+      const {
+        firstName: fname,
+        lastName,
+        weight = 70,
+        address: { city },
+      } = userDetails;
+      console.log(fname);
+      console.log(lastName);
+      console.log(weight); //Default value
+      console.log(city); //Nested Object
+
+      const episode = {
+        seriesName: "The Arrow",
+        mainChac: "Oliver Queen",
+        Relese: 2010,
+        location: "New York",
+      };
+      const { seriesName, ...remain } = episode; //Rest Operator
+      console.log(seriesName);
+      console.log(remain);
+    </script>
+
+    <h3>9. Promises : Resolve, Pending and Reject</h3>
+    <script>
+      let wada = new Promise((res, rej) => {
+        if (false) {
+          return res();
+        } else {
+          return rej();
+        }
+      });
+      wada
+        .then(function () {
+          console.log("Resolved");
+        })
+        .catch(function () {
+          console.log("Rejected");
+        });
+
+      // Number between 0 to 9 and if the number is below 5, then resolved neither rejected.
+      let wadaRaha = new Promise((res, rej) => {
+        let num = Math.floor(Math.random() * 10);
+        if (num < 5) {
+          return res();
+        } else {
+          return rej();
+        }
+      });
+      wadaRaha
+        .then(() => {
+          console.log("Below");
+        })
+        .catch(() => {
+          console.log("Above");
+        });
+
+      //Ghar aao
+      //Gate kholo
+      //Khana khao
+      //Sojao
+      let nestedProm = new Promise((resolve, reject) => {
+        return resolve("Ghar aao");
+      });
+      let prom2 = nestedProm.then((data) => {
+        console.log(data);
+        return new Promise((resolve, reject) => {
+          resolve("Gate Kholo");
+        });
+      });
+      let prom3 = prom2.then((data) => {
+        console.log(data);
+        return new Promise((resolve, reject) => {
+          resolve("Khana Khao");
+        });
+      });
+      prom3.then((data) => {
+        console.log(data);
+        return new Promise((resolve, reject) => {
+          resolve("SoJao");
+        });
+      });
+    </script>
+
+    <h3>10. Async Await :</h3>
+    <script>
+      //.then
+      function asyncFun() {
+          // fetch('https://randomuser.me/api/');
+
+          .then((raw) => {
+          return raw.json();
+      })
+              .then((data) => {
+                  console.log(data);
+              });
+      };
+      asyncFun();
+
+      //async...await
+      async function asyncFunn() {
+          // let raw = await fetch('https://randomuser.me/api/')
+          let result = await raw.json();
+          console.log(result);
+      };
+      asyncFunn();
+    </script>
+
+    <h3>11. Try Catch :</h3>
+    <script>
+      //Run the code even after error.
+      console.log("hey");
+      try {
+        console.log(hey);
+      } catch (error) {
+        console.log(error);
+      }
+      console.log("hey");
+    </script>
+
+    <h3>12. Map(), Reduce() & Filter() :</h3>
+    <script>
+      //Map(): map each element of an array and transform into a new array.
+      const userNames = ["Sam", "Peter", "Daniel"];
+      function transform(name) {
+        return name.toUpperCase();
+      }
+      const namesToUpper = userNames.map(transform);
+      console.log(namesToUpper);
+
+      const namesToLower = userNames.map((name) => name.toLowerCase());
+      console.log(namesToLower);
+
+      const numbers = [1, 2, 3, 4, 5];
+      const modifiedNumbers = numbers.map((num) => {
+        return num * 10;
+      });
+      console.log(modifiedNumbers);
+
+      const employees = [
+        { id: 101, name: "Radha" },
+        { id: 101, name: "Mama" },
+        { id: 101, name: "Barsha" },
+      ];
+      const empLists = employees.map((emp) => emp.name);
+      console.log(empLists);
+
+      const useForEach = [];
+      employees.forEach((emp) => {
+        useForEach.push(emp.name);
+      });
+      console.log(useForEach);
+
+      //Filter(): Create a new array with filtered elements
+      const jobSeekers = [
+        { id: 202, name: "tapan", profile: "Junior Developer" },
+        { id: 203, name: "Abhi", profile: "Senior Developer" },
+        { id: 204, name: "Swaraj", profile: "Junior Developer" },
+        { id: 205, name: "Prasanna", profile: "Senior Developer" },
+        { id: 206, name: "Avinna", profile: "Senior Developer" },
+      ];
+
+      const experiencedEmp = jobSeekers.filter(
+        (emp) => emp.profile === "Senior Developer"
+      );
+      console.log("Senior Develpoer : ", experiencedEmp);
+
+      const unexperiencedEmp = jobSeekers.filter((emp) => {
+        return emp.profile === "Junior Developer";
+      });
+      console.log("Junior Develpoer : ", unexperiencedEmp);
+
+      //Reduce(): Executes a reducer function on each element of an array and provide a single output.
+      const score = [100, 200, 50, 150];
+
+      function calculate(score) {
+        let sum = 0;
+        for (let i = 0; i < score.length; i++) {
+          sum = sum + score[i];
+        }
+        return sum;
+      }
+      console.log("Total Score: ", calculate(score));
+
+      const sumScore = score.reduce(
+        (accumulator, value) => accumulator + value
+      );
+      console.log("Sum of Score: ", sumScore);
+
+      const workers = [
+        {
+          id: 202,
+          name: "tapan",
+          profile: "Junior Developer",
+          rating1: 5,
+          rating2: 10,
+        },
+        {
+          id: 203,
+          name: "Abhi",
+          profile: "Senior Developer",
+          rating1: 4,
+          rating2: 7,
+        },
+        {
+          id: 204,
+          name: "Swaraj",
+          profile: "Junior Developer",
+          rating1: 6,
+          rating2: 8,
+        },
+        {
+          id: 205,
+          name: "Prasanna",
+          profile: "Senior Developer",
+          rating1: 5,
+          rating2: 10,
+        },
+        {
+          id: 206,
+          name: "Avinna",
+          profile: "Senior Developer",
+          rating1: 3,
+          rating2: 7,
+        },
+      ];
+      const seniorDev = workers.filter(
+        (emp) => emp.profile === "Senior Developer"
+      );
+      console.log(seniorDev);
+
+      const totalRating = seniorDev.map((emp) => emp.rating1 + emp.rating2);
+      console.log(totalRating);
+
+      const totalRatingSenior = totalRating.reduce((acc, total) => acc + total);
+      console.log(totalRatingSenior);
+
+      const totalRatingJunior = workers
+        .filter((emp) => emp.profile === "Junior Developer")
+        .map((emp) => emp.rating1 + emp.rating2)
+        .reduce((acc, score) => acc + score);
+      console.log(totalRatingJunior);
+
+      const useOnlyReduce = workers.reduce((acc, emp) => {
+        if (emp.profile === "Junior Developer") {
+          return acc + emp.rating1 + emp.rating2;
+        }
+        return acc;
+      }, 0);
+      console.log(useOnlyReduce);
+    </script>
+
+    <h3>13. Shallow Copy and Deep Copy :</h3>
+    <script>
+      // Call by value --> Deep copy --> Immutable Object
+      // Primitive types are immutable and its always create deep copy
+      // Call by reference --> Shallow copy --> Mutable Object
+      // Non-Primitive types are mutable and its always create Shallow copy
+
+      let originalValue = 10;
+      let copiedValue = originalValue;
+      // console.log(originalValue);
+      // console.log(copiedValue);
+
+      copiedValue = 20;
+      console.log(originalValue); //Deep Copy
+      console.log(copiedValue);
+
+      let originalValue1 = {
+        name: "Jhon",
+        age: 20,
+      };
+      let copiedValue1 = originalValue1;
+      // console.log(originalValue1);
+      // console.log(copiedValue1);
+
+      copiedValue1.name = "Peter";
+      console.log(originalValue1); //Shallow copy
+      console.log(copiedValue1);
+
+      //Methods for Deep copy
+      //JSON.stringify()                 //Not work in function case
+      let copiedValue2 = JSON.parse(JSON.stringify(originalValue1));
+      copiedValue2.name = "Smith";
+      console.log(originalValue1); //Deep copy
+      console.log(copiedValue2);
+
+      //Object.assign          //Nested object will not work
+      let originalVal = {
+        name: "Prince",
+        age: 25,
+        getName: function () {
+          return this.name;
+        },
+      };
+      let copiedVal = Object.assign({}, originalVal);
+      // console.log(originalVal);
+      // console.log(copiedVal);
+
+      copiedVal.name = "Oliver";
+      console.log(originalVal); //Deep Copy
+      console.log(copiedVal);
+
+      //Spread Operator(...)
+      let originalVal1 = {
+        name: "Prince",
+        age: 25,
+        getName: function () {
+          return this.name;
+        },
+        address: {
+          city: "Balasoe",
+          country: "India",
+        },
+      };
+      let copiedVal1 = { ...originalVal1 };
+      // console.log(originalVal1);
+      // console.log(copiedVal1);
+
+      // copiedVal1.name = "Anamika";
+      // copiedVal1.address.city = "Bls";     //Shallow copy
+
+      copiedVal1 = {
+        ...copiedVal,
+        name: "Anammika",
+        address: {
+          ...copiedVal1.address,
+          city: "Bls",
+        },
+      };
+      console.log(originalVal1);
+      console.log(copiedVal1);
+    </script>
+
+    <h3>15. Optional Chaining ? :</h3>
+    <script>
+      //The optional chaining ? is a safe way to access nested object properties, even if an intermediate property does not exist.
+      //It stops the evaluation if the value before ?. is undefined or null and returns undefined.
+      const myUser = {
+        name: "tapan",
+        address: {
+          city: "Bls",
+        },
+      };
+      console.log(myUser.address ? myUser.address.city : Undefined);
+      console.log(myUser.address && myUser.address.city);
+      console.log(myUser.name);
+      console.log(myUser.address.city);
+
+      const customerDetail = {
+        userId: "12345",
+        account: {
+          accountToken: "Abc123",
+          holder: {
+            profile: {
+              firstName: "Mahi",
+              lastName: "Dhoni",
+              birthDate: "01-02-1975",
+            },
+          },
+        },
+      };
+      console.log(
+        customerDetail.account &&
+          customerDetail.account.holder &&
+          customerDetail.account.holder.profile &&
+          customerDetail.account.holder.profile.birthDate
+      );
+
+      console.log(customerDetail.account.holder.profile?.birthDate); //To avoid error
+
+      console.log(customerDetail.getName?.()); //Use Function
+    </script>
+  </body>
+</html>

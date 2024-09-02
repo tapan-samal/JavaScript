@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Closures</title>
+    <style>
+      .selected {
+        font-weight: 800;
+        color: blue;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Closures :</h1>
+    <h4>
+      > Laxical Scoping: <br />
+      //From outside cannot access inside function. <br />
+      //Parent function cannot access child function variable.<br />
+      //Child function can access parent function variables.<br />
+      //Child function cannot acces other child function variables.<br /><br />
+
+      > Closures: <br />
+      > A closure is the combination of a function and the lexical environment
+      within which that function is declared. <br />
+      > The closure can access variables and functions from its containing
+      function, even after the outer function has completed its execution.
+      <br />
+      > The closure preserves the outer scope inside its inner scope. <br />
+      > Closure is a key concept in JavaScript, to managing scope and data
+      encapsulation in JavaScript applications.
+      <br />
+      > Closures are especially useful for preserving data privacy and creating
+      functions with encapsulated state.
+      <br />
+      > In JavaScript, closure is created every time a function is created, at
+      function creation time. <br />
+      > Return whole laxical scope to outside <br />
+      <br />
+
+      <button id="orange">Orange</button> &nbsp;
+      <button id="blue">Blue</button>
+    </h4>
+
+    <script>
+      //Laxical Scope
+      let a = 10;
+      function test1() {
+        let a = 20;
+        console.log(a);
+      }
+      test1();
+
+      let b = 15;
+      function test2() {
+        console.log(b);
+      }
+      test2();
+      //test2 fn not found b value in his own context, so now it try to get from his parent e.i. window
+      //Here b declared in global scope, so its create naming conflict.
+
+      function parent() {
+        let username = "tapan";
+        function childOne() {
+          let secret = "pw12345";
+          console.log("Child One", username); //First not found in own context, then access from parent fn
+          console.log(secret);
+        }
+        childOne();
+
+        function childTwo() {
+          console.log("Child Two ", username);
+          // console.log("Child Two ", secret);
+        }
+        childTwo();
+        console.log(username);
+        // console.log(secret);
+      }
+      parent();
+      // console.log(username);
+
+      // See the difference global and local scope
+
+      //In Global scope, expected result coming but count may use further mistakenly
+      let count = 0;
+      function counter() {
+        console.log((count += 1));
+      }
+      counter();
+      counter();
+      counter();
+
+      //In local scope, expected result not coming
+      function counter1() {
+        let count1 = 0;
+        console.log((count1 += 1));
+      }
+      counter1();
+      counter1();
+      counter1();
+      //To avoid above issues we use closures
+
+      // Closures
+      function counter3() {
+        let count3 = 0;
+
+        function calculate() {
+          return (count3 += 1);
+        }
+        return calculate;
+      }
+      let result = counter3(); //See here outer fn completed execution,
+      console.dir(result); //But here, result is printing through inner fn, who preserve the data.
+
+      //Example
+      function outerFun() {
+        const name = "Tapan Samal";
+
+        function innerFun() {
+          console.log(name);
+        }
+        return innerFun; //By return this function now outer can access whole laxical.
+      }
+      const myFun = outerFun();
+      myFun();
+
+      //Closure with IIFE
+      const output = (function counter2() {
+        let count = 0;
+
+        function eval() {
+          return (count += 1);
+        }
+        return eval;
+      })();
+      console.log(output());
+      console.log(output());
+      console.log(output());
+
+      // document.getElementById('orange').onclick = function() {
+      //     document.body.style.backgroundColor = "orange";
+      // }
+      // document.getElementById('blue').onclick = function() {
+      //     document.body.style.backgroundColor = `blue`;
+      // }
+
+      function clickHandler(color) {
+        return function () {
+          document.body.style.backgroundColor = `${color}`;
+        };
+      }
+      document.getElementById("orange").onclick = clickHandler("orange");
+      document.getElementById("blue").onclick = clickHandler("blue");
+    </script>
+
+    //Cart Example
+    <h2 id="count"></h2>
+    <ul>
+      <li class="item">Laptop</li>
+      <li class="item">Phone</li>
+      <li class="item">Tablet</li>
+      <li class="item">Camera</li>
+    </ul>
+    <script>
+      let products = document.getElementsByClassName("item");
+
+      let cartCounter = (function () {
+        let count = 0;
+        return {
+          increment: () => (count += 1),
+          decrement: () => (count -= 1),
+          totalCount: () => count,
+        };
+      })();
+
+      function updateCart() {
+        document.getElementById("count").innerHTML = cartCounter.totalCount();
+      }
+
+      for (let i = 0; i < products.length; i++) {
+        products[i].addEventListener("click", function () {
+          if (this.className.indexOf("selected") < 0) {
+            this.className += " selected";
+            cartCounter.increment();
+            updateCart();
+          } else {
+            this.className = this.className.replace("selected", "");
+            cartCounter.decrement();
+            updateCart();
+          }
+        });
+      }
+    </script>
+    //Interview Question
+    //write a function createElement that returns another function with increment value.
+    <script>
+      function createElement() {
+        // Initialize the count variable inside the outer function
+        let count = 0;
+
+        // Return an inner function that increments and returns the count variable
+        return function () {
+          count += 1;
+          return count;
+        };
+      }
+
+      // Usage
+      const increment = createElement();
+
+      console.log(increment()); // Output: 1
+      console.log(increment()); // Output: 2
+      console.log(increment()); // Output: 3
+    </script>
+    Example of Data privacy
+    <script>
+      function createCounter() {
+        let count = 0;
+
+        return {
+          increment: function () {
+            count += 1;
+            return count;
+          },
+          decrement: function () {
+            count -= 1;
+            return count;
+          },
+          getCount: function () {
+            return count;
+          },
+        };
+      }
+
+      const counter = createCounter();
+
+      console.log(counter.increment()); // Output: 1
+      console.log(counter.increment()); // Output: 2
+      console.log(counter.decrement()); // Output: 1
+      console.log(counter.getCount()); // Output: 1
+    </script>
+  </body>
+</html>

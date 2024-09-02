@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recursion</title>
+  </head>
+
+  <body>
+    <h1 style="text-align: center">Recursion in JavaScript</h1>
+    <h3>
+      > Recursion is the process of calling itself. <br />
+      > A recursive function is a function that calls itself during its
+      execution like loop. <br />
+      > Recursive function are often used to solve problems that can be broken
+      down into smaller and similar subproblems. <br />
+      > Base Case: The base case is what stops the recursion from continuing of
+      infinite calling. <br />
+      > Base case provides a termination point for the recursive calls.
+    </h3>
+    <script>
+      function test() {
+        test();
+      }
+      // test();        //It will call infinite
+
+      function countDown(n) {
+        for (let i = n; i > 20; i--) {
+          console.log(i);
+        }
+      }
+      countDown(25);
+
+      //recursion
+      function recursiveCount(n) {
+        if (n === 0)
+          //termination point
+          return;
+        console.log(n);
+        recursiveCount(n - 1); //recursive function always call with new value
+      }
+      recursiveCount(3);
+      // recursiveCount(3) : first call(n = 3)
+      // recursiveCount(2) : second call(n = 3-1)
+      // recursiveCount(1) : third call(n = 2-1)
+      // recursiveCount(0) : fourth call(n = 1-1)
+
+      function calTotal(n) {
+        let total = 0;
+        for (let i = 0; i <= n; i++) {
+          total += i;
+        }
+        return total;
+      }
+      console.log(calTotal(6));
+
+      function calTotalRecursion(n, total = 0) {
+        if (n === 0)
+          //Base case
+          return total;
+
+        return calTotalRecursion(n - 1, (total += n));
+        //6-1 : 6+0 = 6, 5-1 : 6+5 = 11, 4-1 : 11+4 = 15, 3-1 : 15+3 = 18, 2-1 : 18+2 = 20, 1-1 : 20+1 = 21.
+      }
+      console.log(calTotalRecursion(6));
+
+      const teamStructure = {
+        name: "Kunal",
+        teams: [
+          {
+            name: "Munal",
+            teams: [
+              {
+                name: "Anipsa",
+                teams: [
+                  {
+                    name: "Yash",
+                    teams: [],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            name: "Anurag",
+            teams: [],
+          },
+        ],
+      };
+      function getTeamDetail(t) {
+        // console.log('Team.....', t);
+        if (t.teams.length === 0)
+          //Base case
+          return;
+
+        t.teams.forEach((team) => {
+          console.log(team.name);
+          getTeamDetail(team); //For nested data
+        });
+      }
+      getTeamDetail(teamStructure);
+    </script>
+  </body>
+</html>

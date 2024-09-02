@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promises</title>
+  </head>
+
+  <body>
+    <h1 style="text-align: center">Promise ()</h1>
+
+    <!-- Task -->
+    <h2 id="one">Heading 1</h2>
+    <h2 id="two">Heading 2</h2>
+    <h2 id="three">Heading 3</h2>
+    <button id="btn">Click Me</button>
+
+    <script>
+      // Level 1
+      const promiseOne = new Promise(function (resolve, reject) {
+        //Do an async task
+        //Database calls, cryptography, network
+        setTimeout(function () {
+          console.log("Async task is completed");
+          resolve();
+        }, 1000);
+      });
+
+      promiseOne.then(function () {
+        //resove has directly link to .then
+        console.log("Promise Consumed");
+      });
+
+      //Level 2
+      new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          console.log("Async task 2");
+          resolve();
+        }, 1000);
+      }).then(function () {
+        console.log("Async 2 resolved");
+      });
+
+      // Level 3
+      const promisethree = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+          resolve({ fname: "Tapan", age: 30 }); //Inside resovle we can pass data
+        }, 1000);
+      });
+      promisethree.then(function (value) {
+        console.log(value);
+      });
+
+      // Level 4 (Recommended)
+      const promiseFour = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          let error = false;
+          if (!error) {
+            resolve({ username: "tapan", password: "123" });
+          } else {
+            reject("Error: Something went wrong");
+          }
+          console.log(promiseFour);
+        }, 1000);
+      });
+      promiseFour
+        // .then((user) => {
+        //   console.log(user);
+        //   return user.username;
+        // })
+        .then((username) => {
+          console.log(username.username);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          console.log("The Promise is either resolved or rejected");
+        });
+
+      // Level 5 (Promise through async await)
+      const promiseFive = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          let error = true;
+          if (!error) {
+            resolve({ username: "JavaScript", password: "12345" });
+          } else {
+            reject("Error: JavaScript went wrong");
+          }
+          console.log(promiseFive);
+        }, 1000);
+      });
+      async function consumePromiseFive() {
+        try {
+          const response = await promiseFive;
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      consumePromiseFive();
+      // console.clear();
+
+      //Example
+      function delay(i) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(i);
+          }, i * 200);
+        });
+      }
+
+      async function test() {
+        console.log("Started");
+        for (let i = 1; i <= 5; i++) {
+          const result = await delay(i);
+          console.log(result);
+        }
+        console.log("Ended");
+      }
+      test();
+
+      //Practical Example
+      const users = ["tapan@gmail.com", "abhi@gmail.com", "swaraj@gmail.com"];
+
+      function makeDelay(user) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve(`Email sent to ${user}`);
+          }, 2000);
+        });
+      }
+
+      async function sendMail() {
+        for (user of users) {
+          const confirmation = await user;
+          console.log(confirmation);
+        }
+        console.log("Email sent to all users...");
+      }
+      sendMail();
+
+      // Example
+      const myPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const randomNumber = Math.random();
+          if (randomNumber < 0.5) {
+            resolve(randomNumber);
+          } else {
+            reject(new Error("Random number is greater than or equal to 0.5"));
+          }
+        }, 2000);
+      });
+      myPromise
+        .then((value) => {
+          console.log("Promise fulfilled with value: ", value);
+        })
+        .catch((error) => {
+          console.error("Promise rejected with error:", error);
+        });
+
+      //Create a new promise using the Promise Constructer
+      const mPromise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const randomNum = Math.floor(Math.random() * 10); //Generate random number 0 to 9
+          if (randomNum < 5) {
+            resolve(`Success ! Random number is ${randomNum}`); //Resolve the promise
+          } else {
+            reject(`Error ! Random number is ${randomNum}`); //Reject the promise
+          }
+        }, 2000);
+      });
+
+      mPromise
+        .then((result) => {
+          //.then method to handle the resolved promise.
+          console.log(result);
+        })
+        .catch((error) => {
+          //.catch mathod to handle the rejected promise.
+          console.error(error); //.error feels like real error with red fonts.
+        });
+      setTimeout(() => {
+        console.clear();
+      }, 2000);
+      
+      ////// Tasks ////////
+      const heading1 = document.getElementById("one");
+      const heading2 = document.getElementById("two");
+      const heading3 = document.getElementById("three");
+      const button = document.getElementById("btn");
+
+      button.addEventListener("click", () => {
+        addColor(heading1, "green", 1000)
+          .then(() => {
+            return addColor(heading2, "orange", 1200);
+          })
+          .then(() => {
+            return addColor(heading3, "tomato", 1500);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+
+      const addColor = (element, color, time) => {
+        return new Promise((resolve, reject) => {
+          if (element) {
+            setTimeout(() => {
+              element.style.color = color;
+              resolve();
+            }, time);
+          } else {
+            reject(new Error("Element not found"));
+          }
+        });
+      };
+    </script>
+  </body>
+</html>

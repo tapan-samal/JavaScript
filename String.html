@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>| String |</title>
+  </head>
+
+  <body>
+    <h1 style="text-align: center">Strings In JavaScript</h1>
+
+    <h2>Methods of String :</h2>
+    <p>
+      <b>
+        1. Length <br />
+        2. CharAt() <br />
+        3. CharCodeAt() <br />
+        4. IndexOf() <br />
+        5. StartsWith() <br />
+        6. EndsWith() <br />
+        7. Substring() <br />
+        8. Substr() <br />
+        9. Slice() <br />
+        10. JSON.stringify() <br />
+        11. ToUpperCase() <br />
+        12. ToLowerCase() <br />
+        13. LocaleCompare() <br />
+        14. Replace() <br />
+        15. ReplaceAll() <br />
+        16. Concat() <br />
+        17. Trim() <br />
+        18. Split() <br />
+        19. Join() <br />
+        20. Includes() <br />
+        21. Match() <br />
+        22. padStart() <br>
+        23. padEnd() <br>
+        24. toString() <br>
+      </b>
+    </p>
+    <script>
+      // Creating String
+      const str1 = new String("Hello JavaScript"); //Object type
+      const str2 = "Tapan Samal"; //Double quotes
+      const str3 = "JavaScript"; //Single quotes
+      const str4 = `Hello JavaScript`; //Back tick
+
+      //Access String :
+      const str = `My name is ${str2} and I am learning ${str3}`; //Template Literal
+      console.log(str);
+      console.log(str1.length); //Check the length
+      console.log(str2, str2.length);
+
+      console.log(str[11]); //Character through index
+      console.log(str.charAt(11));
+      console.log(str.charCodeAt(7)); //Know the character code
+
+      console.log(str3.indexOf("S"));
+      console.log(str2.indexOf("Samal"));
+
+      console.log(str3.startsWith("J"));
+      console.log(str3.startsWith("j"));
+      console.log(str3.endsWith("t"));
+
+      //SubString :
+      console.log(str2.substring(6));
+      console.log(str2.substring(6, 9));
+      console.log(str.substring(27, 40));
+
+      //Substr :
+      console.log(str2.substr(6));
+      console.log(str2.substr(0, 5));
+      console.log(str2.substr(-5));
+
+      //Slice :
+      console.log(str.slice(27, 40));
+      console.log(str.slice(10, -10));
+
+      //Converting :
+      const obj = { name: "tapan" };
+      const objToStr = JSON.stringify(obj); //Object to string
+      console.log(objToStr);
+      console.log(typeof obj);
+      console.log(typeof objToStr);
+
+      console.log(str2.toUpperCase());
+      console.log(str2.toLowerCase());
+
+      console.log("A" === "a"); //Every char has spcl CharCode
+
+      //LocalCompare :
+      const frt1 = "Apple";
+      const frt2 = "Apple";
+      const frt3 = "Banana";
+      console.log(frt1.localeCompare(frt2)); //0 means true
+      console.log(frt1.localeCompare(frt3)); //-1 means false
+
+      //Looping
+      for (let i = 0; i < str3.length; i++) {
+        // console.log(str3[i]);
+      }
+
+      //Replace / ReplaceAll :
+      const newStr2 = str2.replace("Samal", "Kumar");
+      console.log(newStr2);
+      console.log(str2.replace("a", "aa")); //First match only replaced
+      console.log(str2.replaceAll("a", "aa")); //All match replaced
+
+      //Concat :
+      const concatStr = str3.concat(" is a popular language.");
+      console.log(concatStr);
+      const newStr = str2.concat(" learning " + str3);
+      console.log(newStr);
+
+      //Trim :
+      const trimStr = "    Hello   World   !";
+      console.log(trimStr.trim()); //Remove only beginning space
+
+      //Split :
+      console.log(str.split("e"));
+      console.log(str3.split("a"));
+
+      //Join :
+      const fruits = ["Apple", "Banana"];
+      console.log(fruits.join(" and "));
+
+      //Includes
+      console.log(fruits.includes("Apple"));
+      console.log(fruits.includes("apple"));
+
+      //Match
+      console.log(str2.match("Tapan"));
+      console.log(str2.match("Kumar"));
+
+      //PadStart
+      let num = "5";
+      num = num.padStart(4, 0);
+      console.log(num);
+
+      //PadEnd
+      let nums = "5";
+      nums = nums.padStart(3, 0);
+      console.log(nums);
+      
+    </script>
+
+    <h2>String Questions</h2>
+    
+    <h3>01. Convert String into array in different way...?</h3>
+    <script>
+        var string = "Hello, How are you";
+
+        console.log(string.split());   
+        console.log([string]);
+        console.log([...string]);     //spread operator
+        console.log(string.split(""));
+        console.log(string.split(" "));
+    </script>
+
+    <h3>2. Replace string character...?</h3>
+    <script>
+        var string = "Hello, I Love my Bharat";
+
+        console.log(string.replace('e', '_'));     //case sensitive
+        console.log(string.replace(/e/g, '_'));     //case sensitive
+    </script>
+
+    <h3>3. Get substring from string...?</h3>
+    <script>
+        var string = "Hello, I Love my Bharat";
+
+        console.log(string.substring(8, 14));
+        console.log(string.substring(6, string.length));
+        console.log(string.substring(0, string.length-1));  //last char only
+    </script>
+
+    <h3>4. Reverse the String...?</h3>
+    <script>
+        var string = "Hello, I Love my Bharat";
+        
+        console.log(string.split('').reverse().join(''));
+    </script>
+    
+    <h3>5. Remove white space in a String...?</h3>
+    <script>
+        var string = "       Hello, Bharat           ";
+        
+        console.log(string.trim());
+    </script>
+
+    <h3>6. How to merge two string...?</h3>
+    <script>
+        var string1 = "Hello";
+        var string2 = "I love my Bharat";
+
+        console.log(string1.concat(string2));
+    </script>
+
+    //Qus_1 : Truncate the text..?
+    <script>
+      function truncate(string, maxlength) {
+        if (string.length > maxlength) {
+          return string.slice(0, maxlength - 1) + "...";
+        } else {
+          return string;
+        }
+      }
+      console.log(truncate("Subscribe my Channel", 10));
+    </script>
+
+    //Qus_2 : Palindrone number or not...?
+    <script>
+      const isPalindrome = function (x) {
+        return x < 10
+          ? false
+          : x === +x.toString().split("").reverse().join("");
+      };
+      const res = isPalindrome(35753);
+      console.log(res);
+    </script>
+
+    //Qus_3 : Find Hamming Distance...?
+    <script>
+      function hammingDistance(x, y) {
+        if (x.length !== y.length) {
+          throw new Error("String must be of same length");
+        }
+        let distance = 0;
+        for (let i = 0; i < x.length; i++) {
+          if (x[i] !== y[i]) {
+            distance++;
+          }
+        }
+        return distance;
+      }
+      console.log(hammingDistance("hello", "halla"));
+    </script>
+
+    //Qus_4 : Check valid Anagram...?
+    <script>
+      const isAnagram = function (x, y) {
+        x = x.split("").sort().join("");
+        y = y.split("").sort().join("");
+
+        return x === y ? true : false;
+      };
+      console.log(isAnagram("anagram", "nagaram"));
+    </script>
+
+
+  //Random JavaScript Questions</h1>
+    <script>
+        // 1. 10 String Method :
+        const name = "Tapan Samal";
+
+        console.log(name.at(0));
+        console.log(name.at(-1));
+        console.log(name.charAt(0));
+        console.log(name.charCodeAt(0));
+        console.log(name.endsWith('l'));
+        console.log(name.endsWith('m'));
+        console.log(name.includes('Samal'));
+        console.log(name.includes('samal'));
+        console.log(name.indexOf("n"));
+        console.log(name.lastIndexOf('a'));
+        console.log(name.repeat(2));
+        console.log(name.replace('Samal', 'Kumar'));
+        console.log(name.replaceAll('a', 'e'));
+
+        // 2. 10 Array Method
+        const _ = ["A", "B", "C", "A"];
+        console.log(_.filter(x => x != "A")); 
+        console.log(_.join('-')); 
+        console.log(_.includes('A')); 
+        console.log(_.at(0)); 
+        console.log(_.at(-1)); 
+        console.log(_.lastIndexOf('A')); 
+        console.log(_.indexOf('B')); 
+        console.log(_.concat(['D'])); 
+        console.log(_.slice(2));
+        console.log(_.reverse()); 
+        console.log(_.fill('')); 
+        console.log(_.fill('Z')); 
+        
+        // 3. Filter() Method Array of Strings
+        const countries = ["India", "Japan", "America", "France", "Italy", "Australia"]
+
+        console.log(countries.filter(name => name.length < 6));
+        console.log(countries.filter(name => name.startsWith('I')));
+        console.log(countries.filter((name) => name.includes('ia')));
+    </script>
+  </body>
+</html>

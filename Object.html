@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Objects</title>
+  </head>
+
+  <body>
+    <h1 style="text-align: center">Object in JavaScript</h1>
+
+    <h2>Methods of Object :</h2>
+    <p>
+      <b>
+        1. Object.keys() <br />
+        2. Object.values() <br />
+        3. Object.entries() <br />
+        4. Object.assign() <br />
+        5. Object.freeze() <br />
+        6. Object.create() <br />
+        7. Object.is()
+      </b>
+    </p>
+    <script>
+      let person = {
+        name: "kumar",
+        age: 30,
+        job: "Developer",
+      };
+
+      //Object.keys(): Access keys
+      let keys = Object.keys(person);
+      console.log(keys);
+
+      //Object.values(): Access values
+      let values = Object.values(person);
+      console.log(values);
+
+      keys.forEach((key, index) => {
+        console.log(`${key} : ${values[index]}`);
+      });
+
+      //Object.entries(): Access key and value
+      console.log(Object.entries(person));
+      for (let [key, value] of Object.entries(person)) {
+        console.log(`${key}: ${value}`);
+      }
+
+      //Object.assign(): Clone and merge. It overide dupulicate value and keep unique.
+      let clone = Object.assign({}, person);
+      console.log("Clone: ", clone);
+      console.log(person === clone);
+
+      let addToPerson = { location: "Bangalore", age: 31 };
+      let merge = Object.assign({}, person, addToPerson);
+      console.log("Merge: ", merge);
+
+      //Object.freeze(): Make freezed and cant manipulate
+      Object.freeze(person);
+      person.gender = "male";
+      console.log(person);
+
+      //Object.create()
+      const person = {
+        greet() {
+          console.log("Hello");
+        },
+      };
+      const kumar = Object.create(person);
+      kumar.greet();
+
+      //Object.is(): Compare
+      console.log(Object.is("foo", "foo")); 
+      console.log(Object.is({}, {})); 
+      console.log(Object.is(NaN, NaN));
+    </script>
+
+    <script>
+      // Object Singleton
+      const user20 = new Object(); //Singleton
+      const user10 = {}; //Literal
+      console.log(user10);
+      console.log(user20);
+
+      //Object Literals
+      const mySymbol = Symbol("key1");
+      const userDetails = {
+        name: "Tapan",
+        "full name": "Tapan Samal",
+        age: 30,
+        [mySymbol]: "key100",
+        location: "Balasore",
+        email: "tapan@gmail.com",
+        isLoggedIn: false,
+        lastLoginDays: ["Monday", "Friday"],
+      };
+      console.log(userDetails.location);
+      console.log(userDetails["email"]);
+      console.log(userDetails["full name"]);
+      console.log(userDetails[mySymbol]);
+
+      userDetails.email = "kumar@gmail.com"; //Change value
+      console.log(userDetails);
+      // Object.freeze(userDetails);
+      userDetails.email = "samal@gmail.com"; //after freeze value will not change
+      console.log(userDetails);
+
+      userDetails.greeting = function () {
+        console.log("Hello JS User");
+      };
+      userDetails.greetingTwo = function () {
+        console.log(`Hello JS User, ${this.name}`); //String Interpoletion
+      };
+      console.log(userDetails.greeting); //Function reference
+      console.log(userDetails.greeting());
+      console.log(userDetails.greetingTwo());
+
+      console.log(Object.keys(userDetails));
+      console.log(Object.values(userDetails));
+      console.log(Object.entries(userDetails));
+      console.log(userDetails.hasOwnProperty("isLoggedIn"));
+      console.log(userDetails.hasOwnProperty("isLoggedOut"));
+
+      const user100 = {}; //Literal
+      user100.id = "abc123";
+      user100.name = "tapan";
+      user100.isLoggedIn = false;
+      console.log(user100);
+
+      const complexObj = {
+        email: "tapan@gmail.com",
+        fullname: {
+          userfullname: {
+            fname: "Tapan",
+            lname: "Samal",
+          },
+        },
+      };
+      console.log(complexObj);
+      console.log(complexObj.fullname);
+      console.log(complexObj.fullname.userfullname);
+      console.log(complexObj.fullname.userfullname.fname);
+
+      const obj1 = { 1: "a", 2: "b" };
+      const obj2 = { 3: "c", 4: "d" };
+
+      const obj3 = { obj1, obj2 };
+      console.log(obj3);
+      const obj4 = Object.assign({}, obj1, obj2);
+      console.log(obj4);
+      const obj5 = { ...obj1, ...obj2 }; //Spread operator Recommended
+      console.log(obj5);
+    </script>
+  </body>
+</html>
